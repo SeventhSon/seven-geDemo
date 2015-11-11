@@ -41,6 +41,7 @@ public class Player {
 	EntityManager mEM;
 	World world;
 	ArrayList<Bullet> activeBullets;
+
 	public Player(final Entity entity, EntityManager em, World world,
 			ParticleSystem ps, ArrayList<Bullet> activeBullets) {
 		SpriteComponent spritec = new SpriteComponent();

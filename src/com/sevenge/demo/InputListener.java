@@ -37,10 +37,10 @@ public class InputListener implements InputProcessor, GestureProcessor {
 	@Override
 	public boolean onScroll(MotionEvent me1, MotionEvent me2, float distX,
 			float distY) {
-		
-		if(gui.isFollowing())
+
+		if (gui.isFollowing())
 			return false;
-		
+
 		float me2x = me2.getX();
 		float me2y = me2.getY();
 
@@ -113,7 +113,7 @@ public class InputListener implements InputProcessor, GestureProcessor {
 	}
 
 	@Override
-	public boolean onScale (float currentSpan) {
+	public boolean onScale(float currentSpan) {
 		if (!gui.isFollowing()) {
 			float scale = lastScale * firstSpan / currentSpan;
 			camera.setZoom(Math.min(5.0f, Math.max(0.1f, scale)));
@@ -122,11 +122,11 @@ public class InputListener implements InputProcessor, GestureProcessor {
 	}
 
 	@Override
-	public void onScaleEnd (float currentSpan) {
+	public void onScaleEnd(float currentSpan) {
 	}
 
 	@Override
-	public void onScaleBegin (float currentSpan) {
+	public void onScaleBegin(float currentSpan) {
 		if (!gui.isFollowing()) {
 			lastScale = camera.getZoom();
 			firstSpan = currentSpan;
@@ -151,9 +151,12 @@ public class InputListener implements InputProcessor, GestureProcessor {
 		screenY = SevenGE.getHeight() - screenY;
 		if (gui.isRotating && rotatingPointer == pointer && gui.isFollowing()) {
 			Sprite joystick = gui.getControl(1);
-			float buttonY = joystick.getY() + joystick.getAxisAlignedBoundingBox().height / 2;
-			float buttonX = joystick.getX() + joystick.getAxisAlignedBoundingBox().width / 2;
-			double angle = Math.toDegrees(Math.atan2(screenY - buttonY, screenX - buttonX));
+			float buttonY = joystick.getY()
+					+ joystick.getAxisAlignedBoundingBox().height / 2;
+			float buttonX = joystick.getX()
+					+ joystick.getAxisAlignedBoundingBox().width / 2;
+			double angle = Math.toDegrees(Math.atan2(screenY - buttonY, screenX
+					- buttonX));
 			player.onRotate((float) angle);
 		}
 		return false;

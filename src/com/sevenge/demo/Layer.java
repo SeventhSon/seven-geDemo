@@ -1,4 +1,3 @@
-
 package com.sevenge.demo;
 
 import java.util.Comparator;
@@ -14,19 +13,19 @@ public class Layer {
 	public final FixedSizeArray<Sprite> sprites;
 	public FixedSizeArray<SpriteBatch> batches;
 
-	public Layer (int id, float parallaxFactor, int capacity) {
+	public Layer(int id, float parallaxFactor, int capacity) {
 		this.id = id;
 		this.parallaxFactor = parallaxFactor;
 		sprites = new FixedSizeArray<Sprite>(capacity, Sprite.SortByTexture);
 	}
 
-	public void addSprite (Sprite sprite) {
+	public void addSprite(Sprite sprite) {
 		sprites.add(sprite);
 	}
 
 	public static Comparator<Layer> Sorter = new Comparator<Layer>() {
 		@Override
-		public int compare (Layer lhs, Layer rhs) {
+		public int compare(Layer lhs, Layer rhs) {
 			return lhs.id - rhs.id;
 		}
 	};

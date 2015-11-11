@@ -44,8 +44,6 @@ import com.sevenge.graphics.SpriteBatch;
 import com.sevenge.graphics.SpriteBatcher;
 import com.sevenge.graphics.TextureRegion;
 import com.sevenge.input.Input;
-import com.sevenge.sample.Layer;
-import com.sevenge.sample.MapLoader;
 import com.sevenge.utils.DebugLog;
 import com.sevenge.utils.FixedSizeArray;
 
@@ -70,7 +68,7 @@ public class DemoGameState extends GameState {
 
 	@Override
 	public void dispose() {
-		
+
 	}
 
 	@Override
@@ -120,10 +118,11 @@ public class DemoGameState extends GameState {
 			}
 
 			PositionComponent pcBullet = (PositionComponent) bullet.getEntity().mComponents[0];
-			float dist = (float) Math.sqrt((pcBullet.x - player.getPosition().x)
-					* (pcBullet.x - player.getPosition().x)
-					+ (pcBullet.y - player.getPosition().y)
-					* (pcBullet.y - player.getPosition().y));
+			float dist = (float) Math
+					.sqrt((pcBullet.x - player.getPosition().x)
+							* (pcBullet.x - player.getPosition().x)
+							+ (pcBullet.y - player.getPosition().y)
+							* (pcBullet.y - player.getPosition().y));
 
 			if (dist > 2000) {
 				bulletsToRemove.add(bullet);
@@ -148,7 +147,7 @@ public class DemoGameState extends GameState {
 
 	@Override
 	public void resume() {
-		DebugLog.i("DEMO","resume");
+		DebugLog.i("DEMO", "resume");
 	}
 
 	@Override

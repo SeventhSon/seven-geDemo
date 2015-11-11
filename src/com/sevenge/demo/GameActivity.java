@@ -1,7 +1,6 @@
 package com.sevenge.demo;
 
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.opengl.GLSurfaceView;
 
