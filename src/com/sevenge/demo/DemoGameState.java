@@ -44,6 +44,8 @@ import com.sevenge.graphics.SpriteBatch;
 import com.sevenge.graphics.SpriteBatcher;
 import com.sevenge.graphics.TextureRegion;
 import com.sevenge.input.Input;
+import com.sevenge.script.EngineHandles;
+import com.sevenge.script.ScriptingEngine;
 import com.sevenge.utils.DebugLog;
 import com.sevenge.utils.FixedSizeArray;
 
@@ -63,8 +65,10 @@ public class DemoGameState extends GameState {
 	ParticleSystem particleSystem;
 	long globalStartTime;
 	FixedSizeArray<Explosion> explosions;
-	private ArrayList<Bullet> activeBullets = new ArrayList<Bullet>(25);
-	private ArrayList<Bullet> bulletsToRemove = new ArrayList<Bullet>(25);
+	ArrayList<Bullet> activeBullets = new ArrayList<Bullet>(25);
+	ArrayList<Bullet> bulletsToRemove = new ArrayList<Bullet>(25);
+	ScriptingEngine scriptingSystem;
+	int counter = 0;
 
 	@Override
 	public void dispose() {
@@ -102,6 +106,13 @@ public class DemoGameState extends GameState {
 			Vector2 position = player.getPosition();
 			camera.setPostion(position.x, position.y);
 		}
+		
+		if (counter == 10) {
+			counter = 0;
+			scriptingSystem.run(0.32);
+		}
+		counter++;
+
 		animationSystem.process();
 		for (int i = 0; i < explosions.getCount(); i++) {
 			if (!explosions.get(i).isPlaying()) {
@@ -246,6 +257,12 @@ public class DemoGameState extends GameState {
 				}
 			}
 		});
+		EngineHandles eh = new EngineHandles();
+		eh.EM = mEM;
+		eh.ps = physicsSystem;
+		eh.camera = camera;
+		scriptingSystem = new ScriptingEngine(eh);
+		SevenGE.attachScriptingEngineToServer(scriptingSystem);
 	}
 
 	private void generateRandomPlanets() {
