@@ -189,7 +189,9 @@ public class DemoGameState extends GameState {
 		mEM.registerSystem(rendererSystem);
 		mEM.registerSystem(physicsSystem);
 		mEM.registerSystem(animationSystem);
-		generateRandomPlanets();
+		
+		for (int i = 0; i < 400; i++)
+			new Meteorite(mEM.createEntity(10),physicsSystem.getWorld());
 
 		globalStartTime = System.nanoTime();
 		Texture tex = (Texture) SevenGE.getAssetManager().getAsset("particle");
@@ -263,44 +265,5 @@ public class DemoGameState extends GameState {
 		eh.camera = camera;
 		scriptingSystem = new ScriptingEngine(eh);
 		SevenGE.attachScriptingEngineToServer(scriptingSystem);
-	}
-
-	private void generateRandomPlanets() {
-
-		Random rng = new Random();
-		for (int i = 0; i < 400; i++) {
-			Entity entity = mEM.createEntity(10);
-			SpriteComponent cs = new SpriteComponent();
-			PositionComponent cp = new PositionComponent();
-			cp.rotation = rng.nextFloat() * 360.0f;
-			cp.x = rng.nextFloat() * 10000f - 5000f;
-			cp.y = rng.nextFloat() * 10000f - 5000f;
-			cs.scale = 1.0f;
-			int rnd = rng.nextInt(24) + 1;
-			cs.textureRegion = (TextureRegion) assetManager.getAsset("a" + rnd);
-			PhysicsComponent physicsComponent = new PhysicsComponent();
-			BodyDef bodyDef = new BodyDef();
-			bodyDef.type = BodyDef.BodyType.DynamicBody;
-			bodyDef.position.set(PhysicsSystem.WORLD_TO_BOX * cp.x,
-					PhysicsSystem.WORLD_TO_BOX * cp.y);
-			Body body = physicsSystem.getWorld().createBody(bodyDef);
-			body.setAngularDamping(0.1f);
-			body.setLinearDamping(0.1f);
-			CircleShape dynamicCircle = new CircleShape();
-			dynamicCircle.setRadius(cs.textureRegion.height / 2
-					* PhysicsSystem.WORLD_TO_BOX);
-			FixtureDef fixtureDef = new FixtureDef();
-			fixtureDef.shape = dynamicCircle;
-			fixtureDef.density = cs.textureRegion.height * 0.8f;
-			fixtureDef.friction = 0.5f;
-			fixtureDef.restitution = 0.5f;
-			body.createFixture(fixtureDef);
-			body.setUserData(entity);
-			physicsComponent.setBody(body);
-			entity.addComponent(physicsComponent, 4);
-			entity.addComponent(cp, 0);
-			entity.addComponent(cs, 1);
-
-		}
 	}
 }
